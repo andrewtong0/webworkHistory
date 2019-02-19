@@ -1,0 +1,68 @@
+body, #problem_body, ul, ul.courses-list a, #fisheye, #info-panel-right, table.attemptResults td, table.attemptResults th{
+    background-color: #131313 !important;
+    color: #e1e1e1 !important;
+}
+
+.nav-list .active a, #masthead, .info-box h2, .info-box h3, .info-box h4, .info-box h5, .info-box h6{
+    background-color: #19335d !important;
+}
+
+.knowl-output, .knowl-footer, [knowl]:hover, [knowl].active {
+    background-color: #131313 !important;
+    border-left-color: rgba(0, 0, 0, 0) !important;
+    border-right-color: rgba(0, 0, 0, 0) !important;
+    border-bottom-color: rgba(0, 0, 0, 0) !important;
+}
+
+input, select, .unattempted-progress {
+    background-color: #262626 !important;
+    color: #e1e1e1 !important;
+}
+
+.correct-progress{
+    color: #131313 !important;
+}
+
+::selection{
+    background: #c5c5c5 !important;
+}
+
+.btn-primary, .btn-primary:hover, .btn:active, .btn-info {
+    background-color: #19335d !important;
+    background-image: linear-gradient(to bottom, #19335d, #19335d) !important;
+    color: #f4f4f4 !important;
+}
+
+.nav-list li a, .breadcrumb li, .nav-header{
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0) !important;
+    color: #c1c1c1 !important;
+}
+
+a {
+    color: #3262b1 !important;
+}
+
+.webwork_logo a, .webwork_logo{
+    color: #e1e1e1 !important;
+    border: 0px solid #f4f4f4 !important;
+    background: rgba(0, 0, 0, 0) !important;
+}
+
+div.ResultsWithoutError, span.ResultsWithoutError {
+    color: #8F8 !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+div.ResultsWithError, span.ResultsWithErrorInResultsTable {
+    color: #bf5454 !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.parsehilight {
+    color: yellow !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.nav-list a:hover, a:active {
+    background-color: #434343 !important;
+}
