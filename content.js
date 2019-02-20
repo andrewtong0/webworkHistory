@@ -56,7 +56,7 @@ function saveEntry(submittedValues, dateTime, url){
 // Writes values to page from storage (called from popup.js)
 function writeToPage() {
     chrome.storage.sync.get(['url', 'submissionDate', 'answers'], function (items) {
-        //if (validateURL(items.url, url)) {
+        if (validateURL(items.url, url)) {
             let submissionArea = document.getElementById("problem_body");
             let submissionFields = submissionArea.querySelectorAll('input, select');
             console.log(submissionFields);
@@ -78,12 +78,13 @@ function writeToPage() {
             console.log("Reloaded previous submission");
             console.log(items.submissionDate);
             console.log(items.answers);
-        //}
+        }
     });
 }
 
 function validateURL(storedURL, curURL){
-
+    // URLs for question can vary, but all share same split prior to first ?
+    return(curURL.includes(storedURL.split("?")[0]));
 }
 
 window.onload = augmentSubmissionButton;
