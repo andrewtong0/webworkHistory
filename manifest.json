@@ -1,8 +1,8 @@
   {
-    "name": "Webwork Utilities Chrome Extension",
+    "name": "WebWork Utilities Chrome Extension",
     "version": "1.0",
-    "description": "Chrome extension for Webwork Utilities",
-	"permissions": ["activeTab", "declarativeContent", "storage"],
+    "description": "Chrome extension for WebWork Utilities",
+	"permissions": ["activeTab", "declarativeContent", "storage", "tabs"],
 	"background": {
       "scripts": ["background.js"],
       "persistent": false
