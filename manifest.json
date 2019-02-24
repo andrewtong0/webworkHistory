@@ -8,8 +8,8 @@
       "persistent": false
     },
     "content_scripts": [{
-      "css": ["styles.css"],
-      "js": ["content.js"],
+      "css": ["jquery-ui-1.12.1.custom/jquery-ui.theme.css", "styles.css"],
+      "js": ["jquery-3.3.1.js", "jquery-ui-1.12.1.custom/jquery-ui.js","content.js"],
       "matches": ["https://webwork.elearning.ubc.ca/*"]
     }],
 	"page_action": {

@@ -66,3 +66,12 @@ div.ResultsWithError, span.ResultsWithErrorInResultsTable {
 .nav-list a:hover, a:active {
     background-color: #434343 !important;
 }
+
+.popover{
+    background-color: #3b3b3b !important;
+    color: #e5e5e5 !important;
+}
+
+.popover.bottom .arrow:after {
+    border-bottom-color: #3b3b3b !important;
+}
