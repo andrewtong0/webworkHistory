@@ -1,6 +1,5 @@
 let submissionValues = []; // Dictionary storing entries
 let url = String(window.location.href); // Save URL of page for sorting
-
 // Finds all user entries and saves them
 function saveSubmission(){
     let dateTime = new Date();
@@ -36,49 +35,54 @@ function saveSubmission(){
             submissionValues.push(entry);
         }
     }
+    console.log(submissionValues);
     saveEntry(submissionValues, currentDateTime, url);
 }
 
 // Augments submission button with event listener to allow for answer storage
 function augmentSubmissionButton() {
     // Identify submit button for adding event listener
+    console.log("TEST");
     let submit = document.getElementById('previewAnswers_id');
     submit.addEventListener('click', saveSubmission);
 }
 
 // Saves submitted values into Chrome sync storage
-function saveEntry(submittedValues, dateTime, url){
-    JSON.stringify(submittedValues);
-    chrome.storage.sync.set({'url' : url, 'submissionDate' : dateTime, 'answers' : submittedValues}, function() {
+function saveEntry(submittedValues, dateTime, urlRaw){
+    url = truncateURL(urlRaw);
+    let items = [submittedValues, dateTime, url];
+    JSON.stringify(items);
+    chrome.storage.sync.set({[url] : items}, function() {
         console.log("Submission saved.");
     });
 }
 
 // Writes values to page (in appropriate slots) from storage (called from popup.js) - Rollback feature
 function writeToPage() {
-    chrome.storage.sync.get(['url', 'submissionDate', 'answers'], function (items) {
-        if (validateURL(items.url, url)) {
+    url = truncateURL(url);
+    chrome.storage.sync.get(url, function (items) {
+        console.log(items[url]);
+        console.log(url);
+        if (items != null && validateURL(items[url][2], url)) {
+            console.log("writing values");
             let submissionArea = document.getElementById("problem_body");
             let submissionFields = submissionArea.querySelectorAll('input, select');
-            console.log(submissionFields);
-
-            console.log(items.answers);
-            console.log(submissionFields);
+            let submittedValues = items[url][0];
+            let submittedDate = items[url][1];
             for (let i = 0; i < submissionFields.length; i++) {
-                for (let j = 0; j < items.answers.length; j++) {
-                    console.log(submissionFields[i].name == items.answers[j].name);
-                    if (submissionFields[i].name == items.answers[j].name || submissionFields[i].value == items.answers[j].name) {
+                for (let j = 0; j < submittedValues.length; j++) {
+                    if (submissionFields[i].name == submittedValues[j].name || submissionFields[i].value == submittedValues[j].name) {
                         if (submissionFields[i].type == "checkbox") {
-                            submissionFields[i].checked = items.answers[j].answer;
+                            submissionFields[i].checked = submittedValues[j].answer;
                         } else {
-                            submissionFields[i].value = items.answers[j].answer;
+                            submissionFields[i].value = submittedValues[j].answer;
                         }
                     }
                 }
             }
             console.log("Reloaded previous submission");
-            console.log(items.submissionDate);
-            console.log(items.answers);
+            console.log(submittedDate);
+            console.log(submittedValues);
         }
     });
 }
@@ -88,9 +92,9 @@ function validateURL(storedURL, curURL){
     // URLs for question can vary, but all share same split prior to first ?
     return(curURL.includes(storedURL.split("?")[0]));
 }
-
-window.onload = augmentSubmissionButton; // Injects JavaScript into submission button on page load
-window.onload = createFramePopup;
+function truncateURL(url){
+    return(url.split("?")[0]);
+}
 
 function showHistory(){
 
@@ -188,6 +192,16 @@ function createFramePopup(){
         console.log(newHeight);
     }
 
+    // Resizing problem body
+    let problemBody = document.getElementById('problem_body');
+    let columns = problemBody.childNodes[9];
+    columns.style.display= 'grid';
+    columns.style.gridTemplateColumns = '3fr 1fr';
+    let span2 = columns.childNodes[2];
+    let span10 = columns.childNodes[1];
+    span2.style.gridColumn = 2;
+    span10.style.gridColumn = 1;
+
     // Button for toggling visibility
     let button = document.createElement('input');
     button.type = 'submit';
@@ -214,3 +228,10 @@ function createFramePopup(){
         });
     });
 }
+
+function onLoad(){
+    augmentSubmissionButton();
+    createFramePopup();
+}
+
+window.onload = onLoad; // Injects JavaScript into submission button on page load
